@@ -1,6 +1,0 @@
-@LoanManagementApp_HostAddress = http://localhost:5182
-
-GET {{LoanManagementApp_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
