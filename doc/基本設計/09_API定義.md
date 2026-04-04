@@ -22,10 +22,11 @@
 | **POST** | `/categories` | 備品分類（カテゴリ）の追加 | 管理者 |
 | **POST** | `/loan-requests` | 備品の貸出申請を行う | 一般社員 |
 | **GET** | `/loan-requests/me` | 自身の貸出・申請履歴を取得（マイページ用） | 一般社員 |
-| **GET** | `/admin/loan-requests` | 全社の貸出状況・申請一覧の取得（絞り込み含む） | 管理者 |
+| **GET** | `/admin/loan-requests` | 貸出申請一覧の取得 | 管理者 |
+| **GET** | `/admin/loans` | 全社の貸出状況の取得（遅延絞り込み含む） | 管理者 |
 | **PATCH**| `/admin/loan-requests/:id/approve` | 貸出申請の承認 | 管理者 |
 | **PATCH**| `/admin/loan-requests/:id/reject` | 貸出申請の却下（却下理由の入力） | 管理者 |
-| **PATCH**| `/admin/loan-requests/:id/return` | 備品の返却受領処理 | 管理者 |
+| **PATCH**| `/admin/loans/:id/return` | 備品の返却受領処理 | 管理者 |
 
 ---
 
@@ -78,9 +79,9 @@
 *   **レスポンス**: `200 OK`
 
 ### 3.4 備品の返却受領
-*   **PATCH** `/admin/loan-requests/:id/return`
+*   **PATCH** `/admin/loans/:id/return`
 *   **説明**: 管理者が物理的な備品を受け取った際に実行。
-    *   `LOAN_REQUESTS.status` を `返却済` に更新し、`return_date` を記録。
+    *   `LOANS.status` を `返却済` に更新し、`return_date` を記録。
     *   `EQUIPMENTS.status` を `利用可` に戻す。
 *   **リクエスト**: ボディなし（パスパラメータのIDのみ）
 *   **レスポンス**: `200 OK`
