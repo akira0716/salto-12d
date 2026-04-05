@@ -30,6 +30,12 @@ public class Equipment
     public string Description { get; private set; }
 
     /// <summary>
+    /// 備品カテゴリ（ナビゲーションプロパティ）
+    /// </summary>
+    public EquipmentCategory? Category { get; private set; }
+
+
+    /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="id">備品ID</param>
@@ -64,5 +70,18 @@ public class Equipment
         }
 
         Status = newStatus;
+    }
+
+    /// <summary>
+    /// 備品の基本情報を更新する
+    /// </summary>
+    /// <param name="name">備品名</param>
+    /// <param name="categoryId">カテゴリID</param>
+    /// <param name="description">備品の説明</param>
+    public void UpdateDetails(string name, int categoryId, string description)
+    {
+        Name = name;
+        CategoryId = categoryId;
+        Description = description;
     }
 }

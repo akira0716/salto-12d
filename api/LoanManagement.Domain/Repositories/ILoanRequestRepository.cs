@@ -17,10 +17,12 @@ public interface ILoanRequestRepository
     /// <returns></returns>
     Task<IEnumerable<LoanRequest>> GetPendingRequestsByUserIdAsync(int userId);
     /// <summary>
-    /// 申請一覧の取得（管理者用）
+    /// 申請一覧の取得（管理者用・ユーザー検索等）
     /// </summary>
+    /// <param name="userId">ユーザーID（オプション）</param>
+    /// <param name="status">申請ステータス（オプション）</param>
     /// <returns></returns>
-    Task<IEnumerable<LoanRequest>> GetAllAsync();
+    Task<IEnumerable<LoanRequest>> GetAllAsync(int? userId = null, Domain.Enums.LoanRequestStatus? status = null);
     /// <summary>
     /// 申請の新規登録
     /// </summary>

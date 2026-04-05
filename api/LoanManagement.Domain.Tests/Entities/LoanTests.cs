@@ -1,8 +1,6 @@
-using System;
 using LoanManagement.Domain.Entities;
 using LoanManagement.Domain.Enums;
 using LoanManagement.Domain.Exceptions;
-using Xunit;
 
 namespace LoanManagement.Domain.Tests.Entities;
 
@@ -16,7 +14,7 @@ public class LoanTests
         var dueDate = new DateTime(2023, 1, 5); // Invalid: DueDate before LoanDate
 
         // Act & Assert
-        var exception = Assert.Throws<DomainException>(() => 
+        var exception = Assert.Throws<DomainException>(() =>
             new Loan(1, 1, 1, 1, loanDate, dueDate));
         Assert.Equal("返却予定日は貸出日より後の日付でなければなりません。", exception.Message);
     }
@@ -94,11 +92,11 @@ public class LoanTests
     private static Loan CreateValidActiveLoan()
     {
         return new Loan(
-            id: 1, 
-            loanRequestId: 1, 
-            userId: 1, 
-            equipmentId: 1, 
-            loanDate: new DateTime(2023, 1, 10), 
+            id: 1,
+            loanRequestId: 1,
+            userId: 1,
+            equipmentId: 1,
+            loanDate: new DateTime(2023, 1, 10),
             dueDate: new DateTime(2023, 1, 20));
     }
 }

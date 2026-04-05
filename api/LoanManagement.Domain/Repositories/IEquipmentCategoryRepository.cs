@@ -15,4 +15,11 @@ public interface IEquipmentCategoryRepository
     /// </summary>
     /// <returns></returns>
     Task<IEnumerable<EquipmentCategory>> GetAllAsync();
+    
+    /// <summary>
+    /// カテゴリの新規登録
+    /// </summary>
+    /// <param name="category">カテゴリ情報</param>
+    /// <returns></returns>
+    Task AddAsync(EquipmentCategory category);
 }
