@@ -22,4 +22,18 @@ public interface IEquipmentCategoryRepository
     /// <param name="category">カテゴリ情報</param>
     /// <returns></returns>
     Task AddAsync(EquipmentCategory category);
+
+    /// <summary>
+    /// カテゴリ情報の更新
+    /// </summary>
+    /// <param name="category">カテゴリ情報</param>
+    /// <returns></returns>
+    Task UpdateAsync(EquipmentCategory category);
+
+    /// <summary>
+    /// カテゴリの削除
+    /// </summary>
+    /// <param name="category">カテゴリ情報</param>
+    /// <returns></returns>
+    Task DeleteAsync(EquipmentCategory category);
 }

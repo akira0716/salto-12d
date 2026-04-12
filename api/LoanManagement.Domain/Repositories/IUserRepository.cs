@@ -16,4 +16,11 @@ public interface IUserRepository
     /// <param name="email">メールアドレス</param>
     /// <returns></returns>
     Task<User?> GetByEmailAsync(string email);
+    
+    /// <summary>
+    /// ユーザーの新規登録（サインアップ用）
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    Task AddAsync(User user);
 }

@@ -17,6 +17,18 @@ public interface IEquipmentCategoryAppService
     /// 新しい備品カテゴリを登録
     /// </summary>
     /// <param name="dto">登録する備品カテゴリ情報</param>
-    /// <returns>登録されたカテゴリのID</returns>
     Task<int> CreateAsync(EquipmentCategoryCreateDto dto);
+
+    /// <summary>
+    /// カテゴリ情報を更新
+    /// </summary>
+    /// <param name="id">カテゴリID</param>
+    /// <param name="dto">更新する情報</param>
+    Task UpdateAsync(int id, EquipmentCategoryDto dto);
+
+    /// <summary>
+    /// カテゴリを削除
+    /// </summary>
+    /// <param name="id">カテゴリID</param>
+    Task DeleteAsync(int id);
 }

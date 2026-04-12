@@ -54,4 +54,72 @@ public class EquipmentCategoryRepositoryTests
             Assert.Equal(2, result.Count());
         }
     }
+
+    [Fact]
+    public async Task UpdateAsync_ShouldUpdateCategory()
+    {
+        var options = GetDbContextOptions();
+        using (var context = new LoanDbContext(options))
+        {
+            context.EquipmentCategories.Add(new EquipmentCategory(1, "Old Name", "Descr"));
+            await context.SaveChangesAsync();
+        }
+
+        using (var context = new LoanDbContext(options))
+        {
+            var repository = new EquipmentCategoryRepository(context);
+            var category = await repository.GetByIdAsync(1);
+            category.UpdateDetails("New Name", "New Descr");
+            await repository.UpdateAsync(category);
+        }
+
+        using (var context = new LoanDbContext(options))
+        {
+            Assert.Equal("New Name", context.EquipmentCategories.First().Name);
+            Assert.Equal("New Descr", context.EquipmentCategories.First().Description);
+        }
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldDeleteCategory_WhenNoEquipmentsExist()
+    {
+        var options = GetDbContextOptions();
+        using (var context = new LoanDbContext(options))
+        {
+            context.EquipmentCategories.Add(new EquipmentCategory(2, "To Delete", ""));
+            await context.SaveChangesAsync();
+        }
+
+        using (var context = new LoanDbContext(options))
+        {
+            var repository = new EquipmentCategoryRepository(context);
+            var category = await repository.GetByIdAsync(2);
+            await repository.DeleteAsync(category);
+        }
+
+        using (var context = new LoanDbContext(options))
+        {
+            Assert.Empty(context.EquipmentCategories);
+        }
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldThrowException_WhenEquipmentsExist()
+    {
+        var options = GetDbContextOptions();
+        using (var context = new LoanDbContext(options))
+        {
+            context.EquipmentCategories.Add(new EquipmentCategory(3, "Linked", ""));
+            context.Equipments.Add(new Equipment(1, "MacBook", 3, LoanManagement.Domain.Enums.EquipmentStatus.Available, "M1"));
+            await context.SaveChangesAsync();
+        }
+
+        using (var context = new LoanDbContext(options))
+        {
+            var repository = new EquipmentCategoryRepository(context);
+            var category = await repository.GetByIdAsync(3);
+            
+            await Assert.ThrowsAsync<InvalidOperationException>(() => repository.DeleteAsync(category));
+        }
+    }
 }

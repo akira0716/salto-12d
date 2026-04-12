@@ -15,6 +15,8 @@ public class AuthAppService : IAuthAppService
         _jwtTokenGenerator = jwtTokenGenerator;
     }
 
+    #region ユーザーのログイン処理を行う
+
     /// <summary>
     /// ユーザーのログイン処理を行う
     /// </summary>
@@ -41,4 +43,40 @@ public class AuthAppService : IAuthAppService
 
         return new LoginResultDto(token);
     }
+
+    #endregion
+
+    #region ユーザーのサインアップ処理を行う
+
+    /// <summary>
+    /// ユーザーのサインアップ処理を行う
+    /// </summary>
+    /// <param name="request">サインアップ情報</param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<LoginResultDto?> SignupAsync(SignupRequestDto request)
+    {
+        // メールアドレス重複チェック
+        var existingUser = await _userRepository.GetByEmailAsync(request.Email);
+        if (existingUser != null)
+        {
+            throw new InvalidOperationException("このメールアドレスは既に登録されています。");
+        }
+
+        var newUser = new Domain.Entities.User(
+            id: 0,
+            name: request.Name,
+            email: request.Email,
+            passwordHash: request.Password,
+            role: Domain.Enums.Role.Employee
+        );
+
+        await _userRepository.AddAsync(newUser);
+
+        // JWT生成
+        var token = _jwtTokenGenerator.GenerateToken(newUser);
+        return new LoginResultDto(token);
+    }
+
+    #endregion
 }

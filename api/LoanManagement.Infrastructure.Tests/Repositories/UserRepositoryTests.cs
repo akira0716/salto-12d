@@ -41,4 +41,43 @@ public class UserRepositoryTests
             Assert.Equal("test@example.com", result.Email);
         }
     }
+
+    [Fact]
+    public async Task GetByEmailAsync_ShouldReturnUser_WhenUserExists()
+    {
+        var options = GetDbContextOptions();
+        using (var context = new LoanDbContext(options))
+        {
+            context.Users.Add(new User(2, "Test User 2", "test2@example.com", "hash", Role.Employee));
+            await context.SaveChangesAsync();
+        }
+
+        using (var context = new LoanDbContext(options))
+        {
+            var repository = new UserRepository(context);
+            var result = await repository.GetByEmailAsync("test2@example.com");
+
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Id);
+        }
+    }
+
+    [Fact]
+    public async Task AddAsync_ShouldAddUser()
+    {
+        var options = GetDbContextOptions();
+        using (var context = new LoanDbContext(options))
+        {
+            var repository = new UserRepository(context);
+            await repository.AddAsync(new User(3, "New User", "new@example.com", "pass", Role.Admin));
+        }
+
+        using (var context = new LoanDbContext(options))
+        {
+            Assert.Equal(1, context.Users.Count());
+            var user = context.Users.First();
+            Assert.Equal("New User", user.Name);
+            Assert.Equal(Role.Admin, user.Role);
+        }
+    }
 }

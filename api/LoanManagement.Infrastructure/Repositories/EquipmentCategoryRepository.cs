@@ -55,4 +55,43 @@ public class EquipmentCategoryRepository : IEquipmentCategoryRepository
     }
 
     #endregion
+
+    #region カテゴリ情報の更新
+
+    /// <summary>
+    /// カテゴリ情報の更新
+    /// </summary>
+    /// <param name="category">カテゴリ情報</param>
+    /// <returns></returns>
+    public async Task UpdateAsync(EquipmentCategory category)
+    {
+        // カテゴリの更新
+        _context.EquipmentCategories.Update(category);
+        await _context.SaveChangesAsync();
+    }
+
+    #endregion
+
+    #region カテゴリの削除
+
+    /// <summary>
+    /// カテゴリの削除
+    /// </summary>
+    /// <param name="category">カテゴリ情報</param>
+    /// <returns></returns>
+    public async Task DeleteAsync(EquipmentCategory category)
+    {
+        // 紐づく備品が存在するか確認
+        var hasEquipments = await _context.Equipments.AnyAsync(e => e.CategoryId == category.Id);
+        if (hasEquipments)
+        {
+            throw new InvalidOperationException("紐づく備品が存在するため、このカテゴリは削除できません。");
+        }
+
+        // カテゴリの削除
+        _context.EquipmentCategories.Remove(category);
+        await _context.SaveChangesAsync();
+    }
+
+    #endregion
 }

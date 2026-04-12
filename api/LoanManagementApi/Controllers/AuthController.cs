@@ -35,4 +35,28 @@ public class AuthController : ControllerBase
 
         return Ok(result);
     }
+
+    /// <summary>
+    /// サインアップAPI（ユーザー登録）
+    /// </summary>
+    /// <param name="request">サインアップ情報</param>
+    /// <returns></returns>
+    [HttpPost("signup")]
+    public async Task<IActionResult> Signup([FromBody] SignupRequestDto request)
+    {
+        try
+        {
+            var result = await _authAppService.SignupAsync(request);
+            if (result == null)
+            {
+                return BadRequest(new { message = "サインアップに失敗しました。" });
+            }
+
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
 }

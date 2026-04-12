@@ -30,4 +30,15 @@ public class EquipmentCategory
         Name = name;
         Description = description;
     }
+
+    /// <summary>
+    /// カテゴリー情報の更新
+    /// </summary>
+    /// <param name="newName">新しいカテゴリー名</param>
+    /// <param name="newDescription">新しいカテゴリー説明</param>
+    public void UpdateDetails(string newName, string newDescription)
+    {
+        Name = newName;
+        Description = newDescription;
+    }
 }

@@ -53,4 +53,48 @@ public class EquipmentCategoryAppService : IEquipmentCategoryAppService
     }
 
     #endregion
+
+    #region 備品カテゴリ情報の更新
+
+    /// <summary>
+    /// 備品カテゴリ情報を更新
+    /// </summary>
+    /// <param name="id">更新する備品カテゴリのID</param>
+    /// <param name="dto">更新する備品カテゴリ情報</param>
+    public async Task UpdateAsync(int id, EquipmentCategoryDto dto)
+    {
+        // 更新対象のカテゴリを取得
+        var category = await _categoryRepository.GetByIdAsync(id);
+        if (category == null)
+        {
+            throw new KeyNotFoundException($"カテゴリID {id} が見つかりません。");
+        }
+
+        // ドメインエンティティの更新メソッドを呼び出して、リポジトリに保存
+        category.UpdateDetails(dto.Name, dto.Description);
+        await _categoryRepository.UpdateAsync(category);
+    }
+
+    #endregion
+
+    #region 備品カテゴリの削除
+
+    /// <summary>
+    /// 備品カテゴリを削除
+    /// </summary>
+    /// <param name="id">削除する備品カテゴリのID</param>
+    public async Task DeleteAsync(int id)
+    {
+        // 更新対象のカテゴリを取得
+        var category = await _categoryRepository.GetByIdAsync(id);
+        if (category == null)
+        {
+            throw new KeyNotFoundException($"カテゴリID {id} が見つかりません。");
+        }
+
+        // リポジトリに削除を依頼
+        await _categoryRepository.DeleteAsync(category);
+    }
+
+    #endregion
 }
