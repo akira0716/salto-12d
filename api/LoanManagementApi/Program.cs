@@ -54,6 +54,9 @@ builder.Services.AddScoped<ILoanRequestRepository, LoanRequestRepository>();
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
+// Domain Services
+builder.Services.AddScoped<LoanManagement.Domain.Services.LoanPolicyService>();
+
 // AppServices (Application)
 builder.Services.AddScoped<IAuthAppService, AuthAppService>();
 builder.Services.AddScoped<IEquipmentCategoryAppService, EquipmentCategoryAppService>();
