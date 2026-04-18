@@ -107,9 +107,9 @@ const AdminLoansPage: React.FC = () => {
                 return (
                   <TableRow key={row.id} sx={overdue ? { bgcolor: 'rgba(211, 47, 47, 0.04)' } : {}}>
                     <TableCell>
-                      <Typography variant="body2" sx={{ fontWeight: 600 }}>{row.user?.name}</Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>{row.user?.name || row.userName}</Typography>
                     </TableCell>
-                    <TableCell>{row.equipment?.name}</TableCell>
+                    <TableCell>{row.equipment?.name || row.equipmentName}</TableCell>
                     <TableCell>{row.startDate}</TableCell>
                     <TableCell sx={overdue ? { color: 'error.main', fontWeight: 700 } : {}}>
                       {row.expectedReturnDate}

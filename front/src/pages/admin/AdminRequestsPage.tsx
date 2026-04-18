@@ -67,8 +67,8 @@ const AdminRequestsPage: React.FC = () => {
     if (!rejectId) return;
     try {
       await loanRequestApi.reject(rejectId, {
-        rejection_reason: rejectionReason,
-        set_equipment_broken: setBroken
+        rejectionReason: rejectionReason,
+        setEquipmentBroken: setBroken
       });
       setRejectId(null);
       setRejectionReason('');
@@ -108,10 +108,10 @@ const AdminRequestsPage: React.FC = () => {
               {requests.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>{row.user?.name}</Typography>
-                    <Typography variant="caption" color="textSecondary">{row.user?.email}</Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>{row.user?.name || row.userName || `User ID: ${row.userId}`}</Typography>
+                    <Typography variant="caption" color="textSecondary">{row.user?.email || ''}</Typography>
                   </TableCell>
-                  <TableCell>{row.equipment?.name}</TableCell>
+                  <TableCell>{row.equipment?.name || row.equipmentName || `Equipment ID: ${row.equipmentId}`}</TableCell>
                   <TableCell>{row.startDate} 〜 {row.endDate}</TableCell>
                   <TableCell sx={{ maxWidth: 300 }}>{row.purpose}</TableCell>
                   <TableCell align="right">

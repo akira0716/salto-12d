@@ -1,4 +1,4 @@
-export type Role = 'Admin' | 'Employee';
+export type Role = 'Admin' | 'Employee' | 'admin' | 'employee';
 
 export interface User {
   id: number;
@@ -7,7 +7,7 @@ export interface User {
   role: Role;
 }
 
-export type EquipmentStatus = 'available' | 'loaned' | 'in_repair' | 'disposed';
+export type EquipmentStatus = 'available' | 'loaned' | 'underRepair' | 'disposed';
 
 export interface Category {
   id: number;
@@ -18,7 +18,9 @@ export interface Category {
 export interface Equipment {
   id: number;
   name: string;
-  category: Category;
+  categoryId?: number;
+  categoryName?: string;
+  category?: Category;
   status: EquipmentStatus;
   description: string;
 }
@@ -28,8 +30,10 @@ export type LoanRequestStatus = 'pending' | 'approved' | 'rejected';
 export interface LoanRequest {
   id: number;
   equipmentId: number;
+  equipmentName?: string;
   equipment?: Equipment;
   userId: number;
+  userName?: string;
   user?: User;
   startDate: string;
   endDate: string;
@@ -45,8 +49,10 @@ export interface Loan {
   id: number;
   requestId: number;
   userId: number;
+  userName?: string;
   user?: User;
   equipmentId: number;
+  equipmentName?: string;
   equipment?: Equipment;
   startDate: string;
   expectedReturnDate: string;

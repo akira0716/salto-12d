@@ -55,7 +55,7 @@ const EquipmentListPage: React.FC = () => {
     try {
       const response = await equipmentApi.list({
         keyword: keyword || undefined,
-        category_id: categoryId ? Number(categoryId) : undefined,
+        categoryId: categoryId ? Number(categoryId) : undefined,
         status: showOnlyAvailable ? 'available' : undefined
       });
       setEquipments(response.equipments || []);
@@ -75,7 +75,7 @@ const EquipmentListPage: React.FC = () => {
     switch (status) {
       case 'available': return 'success';
       case 'loaned': return 'warning';
-      case 'in_repair': return 'error';
+      case 'underRepair': return 'error';
       default: return 'default';
     }
   };
@@ -84,7 +84,7 @@ const EquipmentListPage: React.FC = () => {
     switch (status) {
       case 'available': return '利用可';
       case 'loaned': return '貸出中';
-      case 'in_repair': return '修理中';
+      case 'underRepair': return '修理中';
       case 'disposed': return '廃棄済';
       default: return status;
     }

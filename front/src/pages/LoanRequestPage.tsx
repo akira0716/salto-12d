@@ -71,9 +71,9 @@ const LoanRequestPage: React.FC = () => {
 
     try {
       await loanRequestApi.create({
-        equipment_id: Number(id),
-        start_date: startDate,
-        end_date: endDate,
+        equipmentId: Number(id),
+        startDate: startDate,
+        endDate: endDate,
         purpose: purpose
       });
       setSuccess(true);
@@ -147,7 +147,7 @@ const LoanRequestPage: React.FC = () => {
             <Divider sx={{ mb: 2 }} />
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography variant="body2">カテゴリ:</Typography>
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>{equipment.category.name}</Typography>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>{equipment.categoryName || equipment.category?.name || '不明'}</Typography>
             </Box>
           </Paper>
         </Grid>

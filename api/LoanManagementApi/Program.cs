@@ -13,7 +13,11 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Controllers add
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter(System.Text.Json.JsonNamingPolicy.CamelCase));
+    });
 builder.Services.AddEndpointsApiExplorer();
 
 // CORS Setting

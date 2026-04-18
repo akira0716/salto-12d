@@ -106,7 +106,7 @@ const AdminEquipmentsPage: React.FC = () => {
     switch (status) {
       case 'available': return <Chip label="利用可" color="success" size="small" />;
       case 'loaned': return <Chip label="貸出中" color="warning" size="small" />;
-      case 'in_repair': return <Chip label="修理中" color="error" size="small" />;
+      case 'underRepair': return <Chip label="修理中" color="error" size="small" />;
       case 'disposed': return <Chip label="廃棄済" color="default" size="small" />;
       default: return <Chip label={status} size="small" />;
     }
@@ -197,7 +197,7 @@ const AdminEquipmentsPage: React.FC = () => {
           >
             <MenuItem value="available">利用可</MenuItem>
             <MenuItem value="loaned">貸出中</MenuItem>
-            <MenuItem value="in_repair">修理中</MenuItem>
+            <MenuItem value="underRepair">修理中</MenuItem>
             <MenuItem value="disposed">廃棄済</MenuItem>
           </TextField>
           <TextField

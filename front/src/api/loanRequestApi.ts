@@ -2,7 +2,7 @@ import { apiClient } from './client';
 import type { LoanRequestListResponse } from '../types';
 
 export const loanRequestApi = {
-  create: (data: { equipment_id: number; start_date: string; end_date: string; purpose: string }) => 
+  create: (data: { equipmentId: number; startDate: string; endDate: string; purpose: string }) => 
     apiClient.post<void>('/loan-requests', data),
   
   listMe: () => 
@@ -14,6 +14,6 @@ export const loanRequestApi = {
   approve: (id: number) => 
     apiClient.patch<void>(`/admin/loan-requests/${id}/approve`),
   
-  reject: (id: number, data: { rejection_reason: string; set_equipment_broken?: boolean }) => 
+  reject: (id: number, data: { rejectionReason: string; setEquipmentBroken?: boolean }) => 
     apiClient.patch<void>(`/admin/loan-requests/${id}/reject`, data),
 };

@@ -133,7 +133,7 @@ const MyPage: React.FC = () => {
               <TableBody>
                 {currentLoans.map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell sx={{ fontWeight: 600 }}>{row.equipment?.name}</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>{row.equipment?.name || row.equipmentName}</TableCell>
                     <TableCell>{row.startDate}</TableCell>
                     <TableCell>{row.endDate}</TableCell>
                     <TableCell>{row.purpose}</TableCell>
@@ -163,7 +163,7 @@ const MyPage: React.FC = () => {
                 {history.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell>{new Date(row.createdAt).toLocaleDateString()}</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>{row.equipment?.name}</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>{row.equipment?.name || row.equipmentName}</TableCell>
                     <TableCell>{row.startDate} 〜 {row.endDate}</TableCell>
                     <TableCell>{getStatusChip(row.status, row.rejectionReason)}</TableCell>
                   </TableRow>

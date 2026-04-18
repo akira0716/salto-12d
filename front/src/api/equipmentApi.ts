@@ -2,7 +2,7 @@ import { apiClient } from './client';
 import type { Equipment, EquipmentListResponse } from '../types';
 
 export const equipmentApi = {
-  list: (params?: { category_id?: number; keyword?: string; status?: string }) => 
+  list: (params?: { categoryId?: number; keyword?: string; status?: string }) => 
     apiClient.get<EquipmentListResponse>('/equipments', { params }),
   
   get: (id: number) => 
