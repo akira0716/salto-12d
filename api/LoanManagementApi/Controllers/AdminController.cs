@@ -31,7 +31,7 @@ public class AdminController : ControllerBase
     {
         // 全ての貸出申請の一覧を取得（管理者向け）
         var results = await _loanRequestAppService.GetAllAsync();
-        return Ok(results);
+        return Ok(new { loanRequests = results });
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class AdminController : ControllerBase
     {
         // 全ての貸出情報一覧を取得（管理者向け）
         var results = await _loanAppService.GetAllAsync();
-        return Ok(results);
+        return Ok(new { loans = results });
     }
 
     /// <summary>

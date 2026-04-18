@@ -29,7 +29,7 @@ public class CategoriesController : ControllerBase
     {
         // 全ての備品カテゴリ一覧を取得
         var results = await _categoryAppService.GetAllAsync();
-        return Ok(results);
+        return Ok(new { categories = results });
     }
 
     /// <summary>

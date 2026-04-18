@@ -61,6 +61,6 @@ public class LoanRequestsController : ControllerBase
 
         // 指定されたユーザーの貸出申請一覧を取得
         var results = await _loanRequestAppService.GetMyRequestsAsync(userId);
-        return Ok(results);
+        return Ok(new { loanRequests = results });
     }
 }
