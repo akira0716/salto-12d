@@ -46,7 +46,8 @@ const SignUpPage: React.FC = () => {
       await authApi.signup({
         name: formData.name,
         email: formData.email,
-        password: formData.password
+        password: formData.password,
+        confirmPassword: formData.confirmPassword
       });
       // Signup success - usually we'd login automatically or redirect to login
       // For simplicity, let's redirect to login with a success message

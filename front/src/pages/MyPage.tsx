@@ -17,7 +17,8 @@ import {
   Tooltip
 } from '@mui/material';
 import { loanRequestApi } from '../api/loanRequestApi';
-import type { LoanRequest } from '../types';
+import { loanApi } from '../api/loanApi';
+import type { LoanRequest, Loan } from '../types';
 import InfoIcon from '@mui/icons-material/Info';
 import { formatDate } from '../utils/dateFormatter';
 
@@ -48,12 +49,14 @@ function TabPanel(props: TabPanelProps) {
 
 const MyPage: React.FC = () => {
   const [requests, setRequests] = useState<LoanRequest[]>([]);
+  const [currentLoans, setCurrentLoans] = useState<Loan[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
     fetchMyRequests();
+    fetchMyLoans();
   }, []);
 
   const fetchMyRequests = async () => {
@@ -69,7 +72,15 @@ const MyPage: React.FC = () => {
     }
   };
 
-  const currentLoans = requests.filter(r => r.status === 'approved'); // 本来はLoansテーブルから取得すべきだが、簡略化のため
+  const fetchMyLoans = async () => {
+    try {
+      const response = await loanApi.listMe();
+      setCurrentLoans(response.loans);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const history = requests;
 
   const getStatusChip = (status: string, reason?: string) => {
@@ -135,9 +146,9 @@ const MyPage: React.FC = () => {
                 {currentLoans.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell sx={{ fontWeight: 600 }}>{row.equipment?.name || row.equipmentName}</TableCell>
-                    <TableCell>{formatDate(row.startDate)}</TableCell>
-                    <TableCell>{formatDate(row.endDate)}</TableCell>
-                    <TableCell>{row.purpose}</TableCell>
+                    <TableCell>{formatDate(row.loanDate)}</TableCell>
+                    <TableCell>{formatDate(row.dueDate)}</TableCell>
+                    <TableCell>-</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
