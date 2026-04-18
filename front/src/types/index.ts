@@ -38,9 +38,9 @@ export interface LoanRequest {
   startDate: string;
   endDate: string;
   purpose: string;
+  requestDate: string;
   status: LoanRequestStatus;
   rejectionReason?: string;
-  createdAt: string;
 }
 
 export type LoanStatus = 'active' | 'returned';
@@ -54,9 +54,9 @@ export interface Loan {
   equipmentId: number;
   equipmentName?: string;
   equipment?: Equipment;
-  startDate: string;
-  expectedReturnDate: string;
-  actualReturnDate?: string;
+  loanDate: string;
+  dueDate: string;
+  returnDate?: string;
   status: LoanStatus;
 }
 

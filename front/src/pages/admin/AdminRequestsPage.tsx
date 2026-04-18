@@ -26,6 +26,7 @@ import {
 } from '@mui/icons-material';
 import { loanRequestApi } from '../../api/loanRequestApi';
 import type { LoanRequest } from '../../types';
+import { formatDate } from '../../utils/dateFormatter';
 
 const AdminRequestsPage: React.FC = () => {
   const [requests, setRequests] = useState<LoanRequest[]>([]);
@@ -112,7 +113,7 @@ const AdminRequestsPage: React.FC = () => {
                     <Typography variant="caption" color="textSecondary">{row.user?.email || ''}</Typography>
                   </TableCell>
                   <TableCell>{row.equipment?.name || row.equipmentName || `Equipment ID: ${row.equipmentId}`}</TableCell>
-                  <TableCell>{row.startDate} 〜 {row.endDate}</TableCell>
+                  <TableCell>{formatDate(row.startDate)} 〜 {formatDate(row.endDate)}</TableCell>
                   <TableCell sx={{ maxWidth: 300 }}>{row.purpose}</TableCell>
                   <TableCell align="right">
                     <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>

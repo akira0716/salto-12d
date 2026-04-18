@@ -22,6 +22,7 @@ import {
 } from '@mui/icons-material';
 import { loanApi } from '../../api/loanApi';
 import type { Loan } from '../../types';
+import { formatDate } from '../../utils/dateFormatter';
 
 const AdminLoansPage: React.FC = () => {
   const [loans, setLoans] = useState<Loan[]>([]);
@@ -97,23 +98,27 @@ const AdminLoansPage: React.FC = () => {
                 <TableCell>備品名</TableCell>
                 <TableCell>貸出日</TableCell>
                 <TableCell>返却予定日</TableCell>
+                <TableCell>返却日</TableCell>
                 <TableCell>ステータス</TableCell>
                 <TableCell align="right">操作</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {loans.map((row) => {
-                const overdue = row.status === 'active' && isOverdue(row.expectedReturnDate);
+                const overdue = row.status === 'active' && isOverdue(row.dueDate);
                 return (
                   <TableRow key={row.id} sx={overdue ? { bgcolor: 'rgba(211, 47, 47, 0.04)' } : {}}>
                     <TableCell>
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>{row.user?.name || row.userName}</Typography>
                     </TableCell>
                     <TableCell>{row.equipment?.name || row.equipmentName}</TableCell>
-                    <TableCell>{row.startDate}</TableCell>
+                    <TableCell>{formatDate(row.loanDate)}</TableCell>
                     <TableCell sx={overdue ? { color: 'error.main', fontWeight: 700 } : {}}>
-                      {row.expectedReturnDate}
+                      {formatDate(row.dueDate)}
                       {overdue && <WarningIcon fontSize="small" sx={{ ml: 1, verticalAlign: 'middle' }} />}
+                    </TableCell>
+                    <TableCell>
+                      {row.returnDate ? formatDate(row.returnDate) : '-'}
                     </TableCell>
                     <TableCell>
                       {row.status === 'active' ? (

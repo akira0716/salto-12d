@@ -18,7 +18,12 @@ async function handleResponse<T>(response: Response): Promise<T> {
     return {} as T;
   }
   
-  return response.json();
+  const text = await response.text();
+  if (!text) {
+    return {} as T;
+  }
+  
+  return JSON.parse(text);
 }
 
 export const apiClient = {

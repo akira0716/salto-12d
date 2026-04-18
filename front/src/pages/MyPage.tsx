@@ -19,6 +19,7 @@ import {
 import { loanRequestApi } from '../api/loanRequestApi';
 import type { LoanRequest } from '../types';
 import InfoIcon from '@mui/icons-material/Info';
+import { formatDate } from '../utils/dateFormatter';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -134,8 +135,8 @@ const MyPage: React.FC = () => {
                 {currentLoans.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell sx={{ fontWeight: 600 }}>{row.equipment?.name || row.equipmentName}</TableCell>
-                    <TableCell>{row.startDate}</TableCell>
-                    <TableCell>{row.endDate}</TableCell>
+                    <TableCell>{formatDate(row.startDate)}</TableCell>
+                    <TableCell>{formatDate(row.endDate)}</TableCell>
                     <TableCell>{row.purpose}</TableCell>
                   </TableRow>
                 ))}
@@ -162,9 +163,9 @@ const MyPage: React.FC = () => {
               <TableBody>
                 {history.map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell>{new Date(row.createdAt).toLocaleDateString()}</TableCell>
+                    <TableCell>{formatDate(row.requestDate)}</TableCell>
                     <TableCell sx={{ fontWeight: 600 }}>{row.equipment?.name || row.equipmentName}</TableCell>
-                    <TableCell>{row.startDate} 〜 {row.endDate}</TableCell>
+                    <TableCell>{formatDate(row.startDate)} 〜 {formatDate(row.endDate)}</TableCell>
                     <TableCell>{getStatusChip(row.status, row.rejectionReason)}</TableCell>
                   </TableRow>
                 ))}

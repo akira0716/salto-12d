@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Paper, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
   TableRow,
   Button,
   CircularProgress,
@@ -20,7 +20,7 @@ import {
   TextField,
   MenuItem
 } from '@mui/material';
-import { 
+import {
   Add as AddIcon,
   Edit as EditIcon
 } from '@mui/icons-material';
@@ -37,7 +37,7 @@ const AdminEquipmentsPage: React.FC = () => {
   // モーダル用
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Equipment | null>(null);
-  
+
   // フォーム状態
   const [formData, setFormData] = useState({
     name: '',
@@ -123,9 +123,9 @@ const AdminEquipmentsPage: React.FC = () => {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 3 }}>
-        <Button 
-          variant="contained" 
-          startIcon={<AddIcon />} 
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
           onClick={() => handleOpen()}
           sx={{ borderRadius: 2 }}
         >
@@ -151,7 +151,7 @@ const AdminEquipmentsPage: React.FC = () => {
               <TableRow key={row.id}>
                 <TableCell>{row.id}</TableCell>
                 <TableCell sx={{ fontWeight: 600 }}>{row.name}</TableCell>
-                <TableCell>{row.category?.name || '未設定'}</TableCell>
+                <TableCell>{row.categoryName || row.category?.name || '未設定'}</TableCell>
                 <TableCell>{getStatusLabel(row.status)}</TableCell>
                 <TableCell align="right">
                   <IconButton color="primary" onClick={() => handleOpen(row)}>
