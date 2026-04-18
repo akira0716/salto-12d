@@ -29,7 +29,7 @@ public class EquipmentsController : ControllerBase
     [HttpGet]
     [Authorize]
     public async Task<ActionResult<IEnumerable<EquipmentDto>>> GetAll(
-        [FromQuery] int? category_id,
+        [FromQuery] int? categoryId,
         [FromQuery] string? keyword,
         [FromQuery] string? status)
     {
@@ -39,13 +39,7 @@ public class EquipmentsController : ControllerBase
             equipmentStatus = parsedStatus;
         }
 
-        var isEmployee = User.IsInRole("Employee");
-        if (isEmployee)
-        {
-            equipmentStatus = EquipmentStatus.Available;
-        }
-
-        var results = await _equipmentAppService.GetAllAsync(category_id, keyword, equipmentStatus);
+        var results = await _equipmentAppService.GetAllAsync(categoryId, keyword, equipmentStatus);
 
         // API定義に基づくJSON構造へマッピング
         return Ok(new { equipments = results });
